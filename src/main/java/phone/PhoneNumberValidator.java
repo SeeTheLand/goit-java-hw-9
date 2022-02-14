@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class PhoneNumberValidator implements PhoneNumberValidated {
+public class PhoneNumberValidator implements PhoneNumberValidatable {
     private final File file;
 
     public PhoneNumberValidator(File file) {

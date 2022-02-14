@@ -1,8 +1,7 @@
 package count;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -21,8 +20,15 @@ public class WordsCounter implements Countable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        resultOfCount = Arrays.stream(contentBuilder.toString().split(" "))
+        Map<String, Long> unsortedMap = Arrays.stream(contentBuilder.toString().split(" "))
+                .map(String::toLowerCase)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        resultOfCount = unsortedMap
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));;
         return resultOfCount;
     }
 
